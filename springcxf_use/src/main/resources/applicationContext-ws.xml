@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+    <!--客户端通过jaxws:client来调用webservice服务-->
+    <jaxws:client id="wsTest" address="http://localhost:8080/ws/ws-service"
+                  serviceClass="com.yaorange.ws.MyWebService"/>
+
+    <jaxws:client id="mobileCodeTest" address="http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx"
+                  serviceClass="com.yaorange.ws.mobile.MobileCodeWSSoap"/>
+</beans>

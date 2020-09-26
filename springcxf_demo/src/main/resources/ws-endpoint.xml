@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+    <!--配置服务发布-->
+    <!--address:指定服务访问地址，配置一般使用相对路径，访问时使用地址：服务器地址+ws配置的相对地址-->
+    <!--implementor:指定服务实现类，#表示当前容器-->
+    <jaxws:endpoint address="/ws-endpoint" implementor="#hello"/>
+    <!--配置webServic服务实现类-->
+    <bean id="hello" class="com.yaorange.ws.endpoint.WSInterfaceImpl" />
+</beans>

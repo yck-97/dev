@@ -1,0 +1,72 @@
+--Controller
+ /**
+     * 获取学生就业情况分页列表
+     *
+     * @param yaStuEmployVO
+     * @param pageNo
+     * @param pageSize
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Result<Page<YaStuEmployVO>> queryPageList(YaStuEmployVO yaStuEmployVO,
+                                                     @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                                     @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                                     HttpServletRequest req) {
+        Result<Page<YaStuEmployVO>> result = new Result<>();
+        Page<YaStuEmployVO> pageList = new Page<>(pageNo, pageSize);
+        pageList = yaStuEmployService.queryStuEmployPageList(pageList, yaStuEmployVO.getClassId(), yaStuEmployVO.getStuId(), yaStuEmployVO.getEmployStatus());
+        result.setSuccess(true);
+        result.setResult(pageList);
+        return result;
+    }
+
+
+Service
+  /**
+     * 获取学生就业情况分页列表
+     *
+     * @param page
+     * @param classId 班级ID
+     * @param stuId 学生ID
+     * @param employStatus 就业状态
+     * @return
+     */
+     Page<YaStuEmployVO> queryStuEmployPageList(Page<YaStuEmployVO> page, String classId, String stuId, Integer employStatus);
+
+
+ServiceImpl
+ /**
+     * 获取学生就业情况分页列表
+     *
+     * @param page
+     * @param classId
+     * @param stuId
+     * @return
+     */
+    @Override
+    public Page<YaStuEmployVO> queryStuEmployPageList(Page<YaStuEmployVO> page, String classId, String stuId, Integer employStatus) {
+        List<YaStuEmployVO> yaStuEmployList = yaStuEmployMapper.queryStuEmployList(page, classId, stuId, employStatus);
+        // 设置就业状态
+        setEmployStatus(yaStuEmployList);
+        return page.setRecords(yaStuEmployList);
+    }
+
+
+Mapper:
+/**
+     * 获取学生就业情况列表
+     *
+     * @param page
+     * @param classId
+     * @param stuId
+     * @return
+     */
+    List<YaStuEmployVO> queryStuEmployList(Page<YaStuEmployVO> page, String classId, String stuId, Integer employStatus);
+
+
+xml:
+ <!--查询学员就业情况列表-->
+    <select id="queryStuEmployList" parameterType="String"  resultType="com.yaorange.modules.employ.entity.vo.YaStuEmployVO">
+
+</select>
